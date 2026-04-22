@@ -309,14 +309,72 @@ afficher la prédiction
 
 
 
+Étape 1 (la vraie priorité)
 
+Coder l’apprentissage :
 
+lire le dataset
+initialiser θ₀ et θ₁
+appliquer la descente de gradient
+obtenir des valeurs finales de θ₀ et θ₁
 
+👉 À la fin, ton programme doit être capable de dire :
 
+“voici la meilleure droite que j’ai trouvée”
 
+✅ Étape 2
 
+Utiliser ces paramètres pour faire des prédictions :
 
+tu donnes un kilométrage
+le programme calcule un prix
+---------------------------------
 
+prix_predit = theta0 + (theta1 * km )
+Erreur = prix_predit - prix_reel
+
+si -100 = modele sous estime
+si +100 = modele sur-estime
+
+θ₀ → “ma droite est trop haute ou trop basse ?”
+θ₁ → “ma droite est trop plate ou trop inclinée ?”
+
+-------------------
+1. tu calcules toutes les erreurs
+
+✔️ -100, -200, -300
+
+2. tu fais des sommes
+
+✔️ somme des erreurs
+✔️ somme des erreurs × km
+
+3. tu appliques les formules du sujet
+
+✔️ tmpθ₀
+✔️ tmpθ₁
+
+4. tu updates θ₀ et θ₁
+5. tu recommences
+---------------------------
+
+✔️ θ₀ → somme des erreurs
+✔️ θ₁ → somme des (erreurs × km)
+------------------------
+pipeline correct est :
+calcul des erreurs
+somme
+division par m
+multiplication par learningRate
+update θ₀ et θ₁
+--------------------
+
+calcul des erreurs pour chaque ligne
+erreur = (θ0 ​+ θ1 ​× km) − prix_reel
+---------------
+
+prediction = calcul du prix_predit  "estimatePrice = θ0​ + (θ1 ​× mileage)
+Erreur = on a la moyenne de thetha0_tmp et thetha1_tmp on garde ces deux valeurs tmp
 
 
 
