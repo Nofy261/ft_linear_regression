@@ -377,12 +377,46 @@ prediction = calcul du prix_predit  "estimatePrice = θ0​ + (θ1 ​× mileage
 Erreur = on a la moyenne de thetha0_tmp et thetha1_tmp on garde ces deux valeurs tmp
 
 
+la descente de gradient, c’est juste :
+“je regarde mes erreurs → je résume → je corrige θ₀ et θ₁”
+
+Ce que représente cette étape
+θ
+0
+	​
+
+=θ
+0
+	​
+
+−learningRate×gradient
+0
+	​
+
+θ
+1
+	​
+
+=θ
+1
+	​
+
+−learningRate×gradient
+1
+	​
 
 
+👉 Ça veut dire :
+
+“je corrige mes paramètres en fonction de l’erreur globale”
+
+la descente de gradient, c’est déplacer la droite dans la direction qui réduit l’erreur”
 
 
+-----------------------
 
-
+somme_erreur
+somme_erreur km 
 
 
 
