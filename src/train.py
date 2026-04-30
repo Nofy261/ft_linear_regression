@@ -1,5 +1,6 @@
 entraîne le modèle
 trouve les bons paramètres
+une fois bons parametres trouvé -> ecris theta0 et 1 dans le fihcier theta.txt
 
 tester → mesurer erreur → ajuster → recommencer
 
@@ -8,12 +9,27 @@ tester → mesurer erreur → ajuster → recommencer
 
 2) predict
 - utiliser theta0 et theta1
+------------------------------------
+
+Étapes à faire 
+Initialiser les paramètres :
+    theta0
+    theta1
+Normaliser les données 
+Définir la fonction de prédiction :
+    y = theta1 * x + theta0
+Définir la fonction de coût :
+    calculer l’erreur (MSE)
+Boucle d’entraînement (gradient descent) :
+    calculer les prédictions
+    calculer l’erreur
+    calculer les gradients
+    mettre à jour theta0 et theta1
+Répéter jusqu’à convergence ou nombre d’itérations fixé
+Sauvegarder les résultats :
+    écrire theta0 et theta1 dans theta.txt
 
 ---------------------------------
-
- Etape : gradient descent
-lire le fichier data.csv
-stocker toutes les valeurs mileage et price
 
 initialiser theta0 = 0
 initialiser theta1 = 0
@@ -42,3 +58,5 @@ répéter pour chaque itération :
     theta1 = theta1 - tmp_theta1
 
 sauvegarder theta0 et theta1
+
+----------------------------
