@@ -1,37 +1,32 @@
 
-format cohérent ✔️
-données numériques ✔️
-
 # // creer une focntion qui return km et price(liste de nombre)
 
+import sys
 
 def read_data(csvfile):
     km = []
     price = []
     try:
         with open(csvfile, "r") as file:
+            # lire et ignore la 1ere ligne
             file.readline()
             for line in file:
-                print(line)
-
-            # mettre le parsing ici
-            # lire et ignorer la 1ere ligne
-            # parcourir toutes les autres lignes du fichier
-            # pour chaque ligne : verifier qu elle n est pas vide et
-            #                     enlever les espaces et le \n
-            # split les deux valeurs km et price
-            # convertir les valeurs en float
-            # ajouter : les km dans la liste km et les prices dans liste price
-            # gerer les lignes invalides:
-            # si ligne mal former : ignorer ou message d erreur ??
-            # 
-
+                cleanedLine = line.strip()
+                # si ligne vide apres strip() on ignore sinon on traite
+                if not cleanedLine: 
+                    continue
+                splitLine = cleanedLine.split(",")
+                if len(splitLine) != 2:
+                    continue
+                try:
+                    kmToFloat = float(splitLine[0])
+                    priceToFloat = float(splitLine[1])
+                except ValueError:
+                    continue
+                # ajoute km le kmList et price dans priceList
+                km.append(kmToFloat)
+                price.append(priceToFloat)
     except FileNotFoundError:
-        print("Can't open the file")
+        sys.exit()
 
     return (km, price)
-
-# for line in file:
-#     line = line.strip()
-    # if not line:
-    #     continue

@@ -417,6 +417,47 @@ la descente de gradient, c’est déplacer la droite dans la direction qui rédu
 
 somme_erreur
 somme_erreur km 
+-------------------------
+
+SYNTAXE:
+
+with ; permet d'ouvrir le fichier et le fermer automatiquement
+strip() permet de nettoyer le debut et la fin Ex : "  a b c ! " devient "a b c !" et "\n" -> ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
