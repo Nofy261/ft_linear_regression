@@ -12,7 +12,7 @@ def read_data(csvfile):
             file.readline()
             for line in file:
                 cleanedLine = line.strip()
-                # si ligne vide apres strip() on ignore sinon on traite
+            # si ligne vide apres strip() on ignore sinon on traite
                 if not cleanedLine: 
                     continue
                 splitLine = cleanedLine.split(",")
@@ -23,10 +23,23 @@ def read_data(csvfile):
                     priceToFloat = float(splitLine[1])
                 except ValueError:
                     continue
-                # ajoute km le kmList et price dans priceList
+            # ajoute km le kmList et price dans priceList
                 km.append(kmToFloat)
                 price.append(priceToFloat)
-    except FileNotFoundError:
-        sys.exit()
+            # ou if not km:
+            if len(km) == 0 or len(price) == 0:
+                print("Empty file")
+                sys.exit()
 
+    except FileNotFoundError:
+        print("File error")
+        sys.exit()
     return (km, price)
+
+
+# def test():
+#     tab = read_data("data.csv")
+#     print(tab)
+#     # ([listKm], [listPrice])
+    
+# test()

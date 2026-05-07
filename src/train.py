@@ -42,6 +42,8 @@ répéter pour chaque itération :
     initialiser somme_erreur = 0
     initialiser somme_erreur_mileage = 0
 
+    m = nombre de (donnees) ligne dans le fichier
+    m = len(km)
     pour chaque donnée i :
 
         estimation = theta0 + theta1 * mileage[i]
@@ -54,9 +56,38 @@ répéter pour chaque itération :
     tmp_theta0 = learningRate * (1/m) * somme_erreur
     tmp_theta1 = learningRate * (1/m) * somme_erreur_mileage
 
+    # ou 
+    # theta0 -= learningRate * (1/m) * somme_erreur
+    # theta1 -= learningRate * (1/m) * somme_erreur_mileage
+
     theta0 = theta0 - tmp_theta0
     theta1 = theta1 - tmp_theta1
 
 sauvegarder theta0 et theta1
 
 ----------------------------
+Faire la normalisation avant le training -> normalize(km, price) :
+rendre toutes les valeurs comparables sur une même échelle
+on travaille avec des petits nombre au lieu des grands nombres comme 24000
+x_norm = (x - min) / (max - min)
+
+
+def normalize(km, price):
+    max = le plus grand  km du fichier
+    min = le plus petit  km 
+    km = [ listKm ] = [24000, 13545, 547758, ...]
+
+    for i in km:
+        x_norm = (x - min) / (max - min)
+
+
+
+
+
+        ----------------------------
+
+from parsing import read_data
+
+def train_model(km, price, learnig_rate, iter):
+
+
