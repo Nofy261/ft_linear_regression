@@ -424,8 +424,26 @@ SYNTAXE:
 with ; permet d'ouvrir le fichier et le fermer automatiquement
 strip() permet de nettoyer le debut et la fin. Ex : "  a b c ! " devient "a b c !" et "\n" -> ""
 
+--------------
 
+normalisation :
+-pour rendre le calcul de gradient descent stable et efficace
 
+Ex: theta1 * km <--- Or les Km sont tres grands 240000 donc
+    les erreurs deviennent trop grand, le resultat sera trop grand
+    le gradient descnet peut apprendre tres lentement , osciller et diverger
+
+Avec la normalisation , les valeurs deviennent petites et comparable
+
+La normalisation sert a ameliorer le calcul des thetas pendant le gradient descent .
+On normalise pour aider l'algorithme a apprendre correctemnt.
+
+---------------------
+
+read_data → données brutes
+normalize_km → préparation
+train → apprend theta0 / theta1
+predict → utilise ces valeurs
 
 
 
