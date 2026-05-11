@@ -1,11 +1,4 @@
-// fichier contennat les deux paramatetres finaux apres entrainement
-model:
 
-y = theta0 + (theta1 * x)
-theta0 = valeur de depart
-theta1 = influence de combien y change avec x
-
-----------
 EX:
 theta0,theta1
 123.4,0.56

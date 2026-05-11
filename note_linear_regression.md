@@ -298,6 +298,14 @@ points (km, price)
 
 
 
+    x(km)
+    ^
+    |
+    |
+    |
+    |
+    |------------->y(prix)
+
 model.py (le plus important):
 la fonction de prédiction (y = ax + b)
 le gradient descent

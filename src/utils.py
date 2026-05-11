@@ -1,4 +1,23 @@
-from parsing import read_data
+
+def save_thetas(filename, theta0, theta1):
+    try:
+        with open(filename, "w") as file:
+            file.write(f"{theta0},{theta1}\n")
+    except Exception as e:
+        print(f"Error saving thetas: {e}")
+
+
+def save_min_max(filename, km_list):
+    min_val = min(km_list)
+    max_val = max(km_list)
+
+    try:
+        with open(filename, "w") as file:
+            file.write(f"{min_val},{max_val}\n")
+    except Exception as e:
+        print(f"Error saving min / max: {e}")      
+
+
 
 def normalize_km(km_list: list):
     max_val = max(km_list)
