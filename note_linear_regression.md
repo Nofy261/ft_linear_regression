@@ -10,11 +10,20 @@ On doit coder la suite d’étapes qui permettent à mon programme de “découv
 
 implémenter une régression linéaire simple = écrire un programme qui trouve automatiquement les meilleurs paramètres d’une droite
 Donc concrètement
-Le programme doit apprendre : y = θ₀ + θ₁ × x et ajuster : θ₀ et θ₁ jusqu’à obtenir la meilleure approximation possible des données.
+Le programme doit apprendre : y = θ₀ + (θ₁ × x) et ajuster : θ₀ et θ₁ jusqu’à obtenir la meilleure approximation possible des données.
 
-La régression linéaire = la méthode
+------------------------------------------------------
+La régression linéaire = le modele mathematique de la formule ci dessous
+y = (theta1 * x) + theta0 = une droite 
 La formule finale = le résultat de cette méthode
 
+Le gradient descent = la methode d'apprentissage (algo d'optimisation)
+Role: trouver les meilleurs theta0 et theta1
+------------------------------------------------------
+
+Régression linéaire : 👉 “QUOI utiliser ?” -> Une droite.
+Gradient descent :👉 “COMMENT trouver la bonne droite ?” ->
+En corrigeant progressivement les erreurs.
 
 Le gradient descent est un algorithme qui ajuste θ₀ et θ₁ progressivement afin de réduire l’erreur entre les prédictions et les vraies valeurs.
 Gradient descent = méthode pour améliorer progressivement θ₀ et θ₁ jusqu’à obtenir le meilleur modèle possible.
@@ -99,7 +108,6 @@ prix -> variable de sortie(y)
 
 chaque ligne = un point (km, prix)
 l'esnsemble = mon dataset
-
 
 Exemple concret
 vrai prix = 10 000 €

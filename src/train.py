@@ -2,26 +2,147 @@ from parsing import read_data
 from utils import normalize_km
 import sys
 
+# Python’s numpy.polyfit Interdit
 
 # learnig_rate = determine la vitesse d'apprentissage
 # trop grand -> instable
 # trop petit -> lent
-# iter = nombre de fois qu on repete l'apprentissage
+# iter = nombre de fois qu on repete l'apprentissage (nombre d amelioration)
 # a chaque iter : calcul erreur + ajuste theta0 et theta1
 # km_list → données
 # price_list → vérité
-# learning_rate → vitesse
-# iter → nombre d’essais
+
+# Modèle :
+#     régression linéaire
+
+# Méthode d’apprentissage :
+#     gradient descent
+
+# Étapes à faire 
+# Initialiser les paramètres :
+#     theta0
+#     theta1
+# Normaliser les données 
+# Définir la fonction de prédiction :
+#     y = theta1 * x + theta0
+# Définir la fonction de coût :
+#     calculer l’erreur (MSE)
+# Boucle d’entraînement (gradient descent) :
+#     calculer les prédictions
+#     calculer l’erreur
+#     calculer les gradients
+#     mettre à jour theta0 et theta1
+# Répéter jusqu’à convergence ou nombre d’itérations fixé
+# Sauvegarder les résultats :
+#     écrire theta0 et theta1 dans theta.txt
+
+# ---------------------------------
 
 
-def train_model(km_norm, price_list, learning_rate, iter):
-    if len(km_norm) != len(price_list):
-        print("Error in the list")
+# somme des erreurs = prediction - prix reel
+# somme pondere par km = (prediction - prix reel) * km
+
+# calcluer erreur pour chaque voiture
+# erreur ligne 1 = prediction - prix reel 
+# erreur ligne 1 km = 
+
+# pour chaque donnee : on prend km[i] et price[i]
+# puis faire une predicion y ​= θ0 ​+ θ1​x
+# calclul erreur = prediction - prix reel
+
+# function train_model(km_list, price_list, learning_rate, iterations):
+
+#     # 1. sécurité des données
+#     if taille(km_list) != taille(price_list):
+#         erreur et stop
+
+#     # 2. normalisation des km
+#     km_norm = normalize_km(km_list)
+
+#     # 3. initialisation des paramètres
+#     theta0 = 0
+#     theta1 = 0
+
+#     # 4. nombre d'exemples
+#     m = taille(km_norm)
+
+#     # 5. boucle d'apprentissage
+#     pour i de 0 à iterations - 1:
+
+            # le gradient indique la direction,
+            # le learning rate ajuste la vitesse d’apprentissage
+#         # reset gradients
+#         tmp_theta0 = 0 corrige le decalage
+#         tmp_theta1 = 0 corrige la pente
+
+#         # 6. parcourir toutes les données
+#         pour chaque index j de 0 à m - 1:
+
+#             # prédiction du modèle
+#             prediction = theta0 + theta1 * km_norm[j]
+
+#             # erreur
+#             erreur = prediction - price_list[j]
+
+#             # accumulation des gradients
+#             tmp_theta0 += erreur
+#             tmp_theta1 += erreur * km_norm[j]
+
+#         # 7. moyenne des gradients
+#         tmp_theta0 = tmp_theta0 / m
+#         tmp_theta1 = tmp_theta1 / m
+
+#         # 8. mise à jour des paramètres
+#         theta0 = theta0 - learning_rate * tmp_theta0
+#         theta1 = theta1 - learning_rate * tmp_theta1
+
+#     # 9. fin du training
+#     retourner theta0, theta1
+
+
+def train_model(km_list, price_list, learning_rate, iter):
+    if len(km_list) != len(price_list):
+        print("Error on list length")
         sys.exit()
 
-    normalize_km(km_norm)
-    theta_0 = 0
-    theta_1 = 0
+    km_norm = normalize_km(km_list)
+    theta0 = 0
+    theta1 = 0
+    m = len(km_norm)
+
+    for i in range(iter):
+        tmp_theta0 = 0
+        tmp_theta1 = 0
+
+        for j in range(m): 
+            prediction = theta0 + theta1 * km_norm[j]
+
+            error = prediction - price_list[j]
+
+            tmp_theta0 += error
+            tmp_theta1 += error * km_norm[j]
+
+        tmp_theta0 = tmp_theta0 / m
+        tmp_theta1 = tmp_theta1 / m
+
+        theta0 = theta0 - learning_rate * tmp_theta0
+        theta1 = theta1 - learning_rate * tmp_theta1
+
+    return theta0, theta1   
+
+
+
+
+
+    
+
+        
+
+
+
+
+
+
 
 
 
@@ -82,25 +203,7 @@ def train_model(km_norm, price_list, learning_rate, iter):
 # - utiliser theta0 et theta1
 # ------------------------------------
 
-# Étapes à faire 
-# Initialiser les paramètres :
-#     theta0
-#     theta1
-# Normaliser les données 
-# Définir la fonction de prédiction :
-#     y = theta1 * x + theta0
-# Définir la fonction de coût :
-#     calculer l’erreur (MSE)
-# Boucle d’entraînement (gradient descent) :
-#     calculer les prédictions
-#     calculer l’erreur
-#     calculer les gradients
-#     mettre à jour theta0 et theta1
-# Répéter jusqu’à convergence ou nombre d’itérations fixé
-# Sauvegarder les résultats :
-#     écrire theta0 et theta1 dans theta.txt
 
-# ---------------------------------
 
 # initialiser theta0 = 0
 # initialiser theta1 = 0
