@@ -27,8 +27,7 @@ def load_thetas(filename):
             values = content.split(",")
 
             if len(values) != 2:
-                print("Error: invalid theta file format")
-                sys.exit()
+                 raise ValueError("Invalid theta file format")
 
             theta0 = float(values[0])
             theta1 = float(values[1])
@@ -47,9 +46,8 @@ def load_minmax(filename):
             values = content.split(",")
 
             if len(values) != 2:
-                print("Error: invalid minmax file format")
-                sys.exit()
-           
+                raise ValueError("Invalid minmax file format")
+
             min_val = float(values[0])
             max_val = float(values[1])
 
@@ -67,7 +65,8 @@ def normalize_km(km_list: list):
     min_val = min(km_list)
     km_norm = []
 
-    # if min != max
+    if min_val == max_val:
+        raise ValueError("All km values are identical")
     for i in km_list:
         i_norm = (i - min_val) / (max_val - min_val)
         km_norm.append(i_norm)
