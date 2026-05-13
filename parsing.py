@@ -6,35 +6,45 @@ import sys
 def read_data(csvfile):
     km_list = []
     price_list = []
+
     try:
         with open(csvfile, "r") as file:
             # lire et ignore la 1ere ligne
             file.readline()
+
             for line in file:
                 cleaned_line = line.strip()
             # si ligne vide apres strip() on ignore sinon on traite
                 if not cleaned_line: 
                     continue
+
                 split_line = cleaned_line.split(",")
                 if len(split_line) != 2:
                     continue
+
                 try:
-                    km_to_float = float(split_line[0])
-                    price_to_float = float(split_line[1])
+                    km = float(split_line[0])
+                    price = float(split_line[1])
                 except ValueError:
                     continue
             # ajoute km le kmList et price dans priceList
-                km_list.append(km_to_float)
-                price_list.append(price_to_float)
+                km_list.append(km)
+                price_list.append(price)
             # ou if not km:
-            if len(km_list) == 0 or len(price_list) == 0:
+            if len(km_list) == 0:
                 print("Empty file")
-                sys.exit()
+                sys.exit(1)
 
     except FileNotFoundError:
-        print("File error")
-        sys.exit()
-    return (km_list, price_list)
+        print("Error: file not found")
+        sys.exit(1)
+    except PermissionError:
+        print("Error: permission denied")
+        sys.exit(1)
+    except IsADirectoryError:
+        print("Error: expected file, not directory")
+        sys.exit(1)
+    return km_list, price_list
 
 
 # def test():

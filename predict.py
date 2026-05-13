@@ -1,10 +1,7 @@
 
-from utils import load_thetas , load_minmax
+import sys
 
-def predict(km):
-    theta0, theta1 = load_thetas("thetas.txt")
-    min_km, max_km = load_minmax("minmax.txt")
-
+def predict(km, min_km, max_km, theta0, theta1):
     km_norm = (km - min_km) / (max_km - min_km)
 
     price = theta0 + theta1 * km_norm

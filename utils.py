@@ -5,19 +5,21 @@ def save_thetas(filename, theta0, theta1):
     try:
         with open(filename, "w") as file:
             file.write(f"{theta0},{theta1}\n")
-    except Exception as e:
-        print(f"Error saving thetas: {e}")
+    except IOError:
+        print("Error: could not save thetas")
+        sys.exit(1)
 
 
-def save_min_max(filename, km_list):
+def save_minmax(filename, km_list):
     min_val = min(km_list)
     max_val = max(km_list)
 
     try:
         with open(filename, "w") as file:
             file.write(f"{min_val},{max_val}\n")
-    except Exception as e:
-        print(f"Error saving min / max: {e}")      
+    except IOError:
+        print("Error: could not save min/max")
+        sys.exit(1)    
 
 
 def load_thetas(filename):
@@ -33,9 +35,10 @@ def load_thetas(filename):
             theta1 = float(values[1])
 
             return theta0, theta1
-    except Exception as e:
-        print(f"Error loading thetas: {e}")
-        sys.exit()
+
+    except (FileNotFoundError, ValueError, PermissionError):
+        print("Error loading thetas")
+        sys.exit(1)
 
 
 
@@ -43,6 +46,9 @@ def load_minmax(filename):
     try:
         with open(filename, "r") as file:
             content = file.read().strip()
+            if not content:
+                raise ValueError("Empty minmax file")
+
             values = content.split(",")
 
             if len(values) != 2:
@@ -53,24 +59,9 @@ def load_minmax(filename):
 
             return min_val, max_val
             
-    except Exception as e:
-        print(f"Error loading min/max values: {e}")
-        sys.exit()
-
-
-
-
-def normalize_km(km_list: list):
-    max_val = max(km_list)
-    min_val = min(km_list)
-    km_norm = []
-
-    if min_val == max_val:
-        raise ValueError("All km values are identical")
-    for i in km_list:
-        i_norm = (i - min_val) / (max_val - min_val)
-        km_norm.append(i_norm)
-    return km_norm
+    except (FileNotFoundError, PermissionError, ValueError):
+        print("Error loading min/max values")
+        sys.exit(1)
 
 
 # // outils math reutilisable

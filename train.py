@@ -1,25 +1,32 @@
 from parsing import read_data
-from utils import normalize_km
-from utils import save_thetas
-from utils import save_min_max
 import sys
 
 
-def train_model(km_list, price_list, learning_rate, iter):
+def train_model(km_list, price_list, learning_rate, iterations):
     if len(km_list) != len(price_list):
         print("Error: km and price must have same length")
-        sys.exit()
+        sys.exit(1)
 
-    km_norm = normalize_km(km_list)
+    min_km = min(km_list)
+    max_km = max(km_list)
 
-    theta0 = 0
-    theta1 = 0
+    if min_km == max_km:
+        print("Error: all km are identical")
+        sys.exit(1)
+
+    km_norm = []
+    for x in km_list:
+        normalized_value = (x - min_km) / (max_km - min_km)
+        km_norm.append(normalized_value)
+
+    theta0 = 0.0
+    theta1 = 0.0
     m = len(km_norm)
 
     # boucle d'apprentissage
-    for i in range(iter):
-        tmp_theta0 = 0
-        tmp_theta1 = 0
+    for i in range(iterations):
+        tmp_theta0 = 0.0
+        tmp_theta1 = 0.0
 
         # parcours des donnees
         for j in range(m): 
@@ -52,8 +59,6 @@ def train_model(km_list, price_list, learning_rate, iter):
         # on ajuste l inclinaison de la droite
         theta1 = theta1 - learning_rate * tmp_theta1
 
-    save_min_max("minmax.txt", km_list)
-    save_thetas("thetas.txt", theta0, theta1)
     return theta0, theta1  
 
 
@@ -161,14 +166,6 @@ def train_model(km_list, price_list, learning_rate, iter):
 # gradient descent: une méthode pour ajuster theta0 et theta1 progressivement
 # But: trouver les meilleures valeurs de theta0 et theta1 qui minimisent l’erreur
  
-
-
-# 1. utiliser theta actuel
-# 2. calculer erreurs
-# 3. calculer corrections
-# 4. mettre à jour theta
-
-
 # 1. prédire avec les nouvelles valeurs des thetas a chaque iteration
 # 2. mesurer erreur
 # 3. accumuler erreurs
