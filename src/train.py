@@ -1,6 +1,65 @@
 from parsing import read_data
 from utils import normalize_km
+from utils import save_thetas
+from utils import save_min_max
 import sys
+
+
+def train_model(km_list, price_list, learning_rate, iter):
+    if len(km_list) != len(price_list):
+        print("Error: km and price must have same length")
+        sys.exit()
+
+    km_norm = normalize_km(km_list)
+
+    theta0 = 0
+    theta1 = 0
+    m = len(km_norm)
+
+    # boucle d'apprentissage
+    for i in range(iter):
+        tmp_theta0 = 0
+        tmp_theta1 = 0
+
+        # parcours des donnees
+        for j in range(m): 
+            estimate_price = theta0 + theta1 * km_norm[j]
+
+            error = estimate_price - price_list[j]
+
+            # permet de comprendre si ma droite predit trop haut ou trop bas les prix
+
+            tmp_theta0 += error
+            tmp_theta1 += error * km_norm[j]
+
+        # on clacule la moyenne des corrections 
+        # on fait une petite correction répétée plusieurs fois
+        # la moyenne sert à ajuster la droite doucement dans la bonne direction
+        # de combien je dois changer theta0 et theta1 pour ameliorer la droite de facon stable et progressive
+        tmp_theta0 = tmp_theta0 / m
+        tmp_theta1 = tmp_theta1 / m
+
+        # on modifie theta0 et theta1
+        # nouveau_theta = ancien_theta - correction
+        # correction = learning_rate * tmp_theta0
+        # ON met à jour la droite en la déplaçant
+        # légèrement dans la direction qui réduit l’erreur
+        # learning_rate: taille du pas pour corriger la droite
+
+        # on ajuste la hauteur de la droite
+        theta0 = theta0 - learning_rate * tmp_theta0
+
+        # on ajuste l inclinaison de la droite
+        theta1 = theta1 - learning_rate * tmp_theta1
+
+    save_min_max("minmax.txt", km_list)
+    save_thetas("thetas.txt", theta0, theta1)
+    return theta0, theta1  
+
+
+
+
+
 
 # Python’s numpy.polyfit Interdit
 
@@ -101,54 +160,7 @@ import sys
 
 # gradient descent: une méthode pour ajuster theta0 et theta1 progressivement
 # But: trouver les meilleures valeurs de theta0 et theta1 qui minimisent l’erreur
-
-def train_model(km_list, price_list, learning_rate, iter):
-    if len(km_list) != len(price_list):
-        print("Error: km and price must have same length")
-        sys.exit()
-
-    km_norm = normalize_km(km_list)
-    theta0 = 0
-    theta1 = 0
-    m = len(km_norm)
-
-    # boucle d'apprentissage
-    for i in range(iter):
-        tmp_theta0 = 0
-        tmp_theta1 = 0
-
-        # parcours des donnees
-        for j in range(m): 
-            estimate_price = theta0 + theta1 * km_norm[j]
-
-            error = estimate_price - price_list[j]
-
-            # permet de comprendre si ma droite predit trop haut ou trop bas les prix
-
-            tmp_theta0 += error
-            tmp_theta1 += error * km_norm[j]
-
-        # on clacule la moyenne des corrections 
-        # on fait une petite correction répétée plusieurs fois
-        # la moyenne sert à ajuster la droite doucement dans la bonne direction
-        # de combien je dois changer theta0 et theta1 pour ameliorer la droite de facon stable et progressive
-        tmp_theta0 = tmp_theta0 / m
-        tmp_theta1 = tmp_theta1 / m
-
-        # on modifie theta0 et theta1
-        # nouveau_theta = ancien_theta - correction
-        # correction = learning_rate * tmp_theta0
-        # ON met à jour la droite en la déplaçant
-        # légèrement dans la direction qui réduit l’erreur
-        # learning_rate: taille du pas pour corriger la droite
-
-        # on ajuste la hauteur de la droite
-        theta0 = theta0 - learning_rate * tmp_theta0
-
-        # on ajuste l inclinaison de la droite
-        theta1 = theta1 - learning_rate * tmp_theta1
-
-    return theta0, theta1   
+ 
 
 
 # 1. utiliser theta actuel

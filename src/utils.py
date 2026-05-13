@@ -1,3 +1,5 @@
+import sys
+
 
 def save_thetas(filename, theta0, theta1):
     try:
@@ -16,6 +18,47 @@ def save_min_max(filename, km_list):
             file.write(f"{min_val},{max_val}\n")
     except Exception as e:
         print(f"Error saving min / max: {e}")      
+
+
+def load_thetas(filename):
+    try:
+        with open(filename, "r") as file:
+            content = file.read().strip()
+            values = content.split(",")
+
+            if len(values) != 2:
+                print("Error: invalid theta file format")
+                sys.exit()
+
+            theta0 = float(values[0])
+            theta1 = float(values[1])
+
+            return theta0, theta1
+    except Exception as e:
+        print(f"Error loading thetas: {e}")
+        sys.exit()
+
+
+
+def load_minmax(filename):
+    try:
+        with open(filename, "r") as file:
+            content = file.read().strip()
+            values = content.split(",")
+
+            if len(values) != 2:
+                print("Error: invalid minmax file format")
+                sys.exit()
+           
+            min_val = float(values[0])
+            max_val = float(values[1])
+
+            return min_val, max_val
+            
+    except Exception as e:
+        print(f"Error loading min/max values: {e}")
+        sys.exit()
+
 
 
 

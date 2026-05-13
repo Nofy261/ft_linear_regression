@@ -1,3 +1,26 @@
+
+from utils import load_thetas , load_minmax
+
+def predict(km):
+    theta0, theta1 = load_thetas("thetas.txt")
+    min_km, max_km = load_minmax("minmax.txt")
+
+    km_norm = (km - min_km) / (max_km - min_km)
+
+    price = theta0 + theta1 * km_norm
+
+    return price
+    
+
+
+
+
+
+
+
+
+
+
 # utilise le modèle entraîné
 # fait des prédictions
 # calcul de prediction donné dans le sujet 
@@ -50,11 +73,3 @@
 # 4. convertir en float
 # 5. retourner les valeurs
 
-def predict(km):
-    theta0, theta1, min_km, max_km = load_model()
-
-    km_norm = (km - min_km) / (max_km - min_km)
-
-    price = theta0 + theta1 * km_norm
-
-    print(f"Estimated price: {price}")
