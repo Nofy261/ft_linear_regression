@@ -295,16 +295,18 @@ points (km, price)
    prédiction
 
 ---------------------
+En matplotlib 
 
-
-
-    x(km)
+   y(prix)
     ^
     |
     |
     |
     |
-    |------------->y(prix)
+    |------------->x(km)
+
+-----------------------
+
 
 model.py (le plus important):
 la fonction de prédiction (y = ax + b)
@@ -521,23 +523,186 @@ def train_model(km_list, price_list, learning_rate, iterations):
 
     return theta0, theta1  
 
+-----------------------------
+
+Formule de normalisation:
+
+x_norm = (x - min) / (max - min)
+le min normaliser sera toujours = 0
+le max    -----------------     = 1
+
+Formule de prediction :
+
+y = theta0 + (theta1 * x_norm)
+
+x_norm = valeur normalisé du km
+y = prix predit par le modele
+
+Pour dessiner le graphe (x, y) :
+on prend le km reel donnee dans la data (x = km)
+pour le prix on applique notre modele donc y = prix predit par notre modele
+
+----------------------------
+
+def graph_model(data_file, theta_file, minmax_file):
+    km_list, price_list = read_data(data_file)
+    theta0, theta1 = load_thetas(theta_file)
+    min_km, max_km = load_minmax(minmax_file)
+
+    # afficher les points
+    plt.scatter(km_list, price_list, color="blue")
+
+    # on prend les km reel 
+    x_min = min_km
+    x_max = max_km
+
+    #prediction du modele y = theta0 + (theta1 * x_norm)
+    y_min = theta0
+    y_max = theta0 + theta1
+
+    #points de la droite
+    #en matplotlib: X_line(km) = axe horizontal et Y_line(prix) = axe vertical
+    x_line = [x_min, x_max]
+    y_line = [y_min, y_max]
+
+    #tracer la droite
+    plt.plot(x_line, y_line, color="red")
+
+    plt.show()
+
+    OU 
+
+
+    # def plot_model(data_file, theta_file, minmax_file):
+    # km_list, price_list = read_data(data_file)
+    # theta0, theta1 = load_thetas(theta_file)
+    # min_km, max_km = load_minmax(minmax_file)
+
+    # points réels
+    # plt.scatter(km_list, price_list, color="blue")
+
+    # droite prédite
+    # km_line = [min_km, max_km]
+    #     km_line_norm = [(x - min_km) / (max_km - min_km) for x in km_line]
+
+    #     price_line = [
+    #         theta0 + theta1 * km_line_norm[0],
+    #         theta0 + theta1 * km_line_norm[1]
+    #     ]
+
+    #     plt.plot(km_line, price_line, color="red")
+
+    #     plt.xlabel("km")
+    #     plt.ylabel("price")
+    #     plt.title("Linear Regression Model")
+    #     plt.show()
+
+
+---------------------------
 
 
 
 
+"1- On normalise min_km et max_km
+km_max = 240000.0
+on prend km_min = 22899.0
+on le normalise km_min_norm = (km_min - km_min) / (km_max - km_min) 
+km_min_norm = 0 (toujours 0 car c'est le debut)
+Faire le meme chose avec km_max 
+
+km_min_norm = 0
+km_max_norm = 1
+
+2- Predictions sur min_km et max_km
+
+y = theta0 + (theta1 * x_norm)
+
+y_min = thetha0 + (theta1 * km_min_norm )
+y_min = theta0
+
+y_max = theta0 + (theta1 * km_max_norm )
+y_max = theta0 + theta1
+
+premier point (km_min_reel, price_predict)
+km = km_min reel = 22899
+price = y_min = theta0 + theta1 
+
+dernier point (km_max_reel, price_predict)
+km = km_max_norm =  240000
+price = y_max = theta0 + theta1 
+
+-----------------
+
+Qu’est-ce que la régression linéaire ?
+
+Une méthode qui cherche une droite qui minimise l’erreur entre les prédictions et les vraies valeurs.
+
+Que représentent θ0 et θ1 ?
+θ0 → intercept (valeur quand x = 0)
+θ1 → pente (variation du prix selon le km)
+
+Pourquoi une droite ?
+Parce qu’on suppose une relation linéaire entre km et prix.
+
+À quoi sert le gradient descent ?
+Trouver les meilleurs θ0 et θ1 en minimisant l’erreur.
+
+Pourquoi on doit itérer ?
+Parce qu’on améliore progressivement les paramètres.
+
+Que se passe-t-il quand ça converge ?
+Le gradient devient proche de 0 → les theta ne changent plus.
+
+Que signifie “learning rate” ?
+Taille du pas de correction à chaque itération.
+
+Que se passe-t-il si learning rate trop grand ?
+ Divergence ou oscillation
+
+Et si learning rate est trop petit ?
+apprentissage très lent.
+
+Pourquoi normaliser les données ?
+Pour éviter de grandes différences d’échelle et stabiliser l’apprentissage.
+
+Pourquoi seulement km est normalisé ?
+ Parce que c’est la feature utilisée dans le modèle (price est la target).
+
+Pourquoi utiliser uniquement min et max pour la droite ?
+ Parce qu’une droite est définie par 2 points.
+
+Pourquoi pas tous les points pour tracer la droite ?
+On ne trace pas une courbe, mais une fonction linéaire.
+
+Comment savoir si ton modèle est bon ?
+La droite suit globalement les points + erreur faible.
+
+Que signifie une droite plate ?
+ θ1 ≈ 0 → le km n’influence pas le prix.
+
+Pourquoi ton modèle peut être “presque bon” mais pas parfait ?
+Parce que les données ne sont pas parfaitement linéaires.
+
+Est-ce que ton modèle est exact ?
+Non, c’est une approximation.
+
+Peut-on améliorer ton modèle ?
+Oui : normalisation des deux variables, feature engineering, etc.
+
+Explication du projet :
+lecture data - normalisation -gradient descent
+sauvegarde θ - prediction -visualisation
+
+Si tu changes learning rate, que se passe-t-il ?
+impact direct sur convergence.
+
+Comment sais-tu que ton modèle a convergé ?
+les theta deviennent stables.
 
 
 
-
-
-
-
-
-
-
-
-
-
+MAE = 557.8383063347804 
+en moyenne, mon modèle se trompe d’environ 558€ sur le prix d’une voiture
 
 
 
