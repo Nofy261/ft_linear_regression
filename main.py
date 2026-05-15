@@ -30,7 +30,7 @@ def run_predict(theta_file, minmax_file):
 
     price = predict(km, min_km, max_km, theta0, theta1)
 
-    print(price)
+    print(f"Estimated price: {price}")
 
 
 if __name__ == "__main__":
