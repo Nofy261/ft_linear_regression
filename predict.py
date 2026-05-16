@@ -1,5 +1,5 @@
 
-import sys
+# A VOIR NORME nombre de parametre
 
 def predict(km, min_km, max_km, theta0, theta1):
     km_norm = (km - min_km) / (max_km - min_km)

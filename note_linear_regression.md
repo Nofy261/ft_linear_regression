@@ -180,18 +180,6 @@ erreur = estimé − réel
 
 
 
-1. Phase d’apprentissage (training)
-Tu regardes toutes les données
-Tu ajustes θ₀ et θ₁
-Tu trouves la “meilleure droite”
-
-👉 C’est là que se passe le gros du projet
-
-2. Phase d’utilisation (prédiction)
-Tu prends un nouveau km
-Tu appliques :
-→ prix = θ₀ + θ₁ × km
-
 -----------------------------------------------
  3 idées du projet :
 
@@ -265,18 +253,7 @@ fin boucle
 sauvegarder theta0 et theta1 dans un fichier
 
 
-2 - prediction program
 
-charger theta0 et theta1 depuis fichier
-
-demander input:
-    mileage utilisateur
-
-normaliser mileage (si nécessaire)
-
-prediction = theta0 + theta1 * mileage
-
-afficher prediction
 
 -----------------------
 
@@ -305,47 +282,6 @@ En matplotlib
     |
     |------------->x(km)
 
------------------------
-
-
-model.py (le plus important):
-la fonction de prédiction (y = ax + b)
-le gradient descent
-les calculs math
-
- train.py :
-charger les données
-appeler model.py pour entraîner
-sauvegarder les paramètres (theta)
-
-predict.py :
-charger les paramètres
-prendre une input utilisateur
-afficher la prédiction
-
-
-
-
-
-Étape 1 (la vraie priorité)
-
-Coder l’apprentissage :
-
-lire le dataset
-initialiser θ₀ et θ₁
-appliquer la descente de gradient
-obtenir des valeurs finales de θ₀ et θ₁
-
-👉 À la fin, ton programme doit être capable de dire :
-
-“voici la meilleure droite que j’ai trouvée”
-
-✅ Étape 2
-
-Utiliser ces paramètres pour faire des prédictions :
-
-tu donnes un kilométrage
-le programme calcule un prix
 ---------------------------------
 
 prix_predit = theta0 + (theta1 * km )
@@ -531,7 +467,7 @@ x_norm = (x - min) / (max - min)
 le min normaliser sera toujours = 0
 le max    -----------------     = 1
 
-Formule de prediction :
+Formule de prediction = formule de regression lineaire:
 
 y = theta0 + (theta1 * x_norm)
 
@@ -543,64 +479,6 @@ on prend le km reel donnee dans la data (x = km)
 pour le prix on applique notre modele donc y = prix predit par notre modele
 
 ----------------------------
-
-def graph_model(data_file, theta_file, minmax_file):
-    km_list, price_list = read_data(data_file)
-    theta0, theta1 = load_thetas(theta_file)
-    min_km, max_km = load_minmax(minmax_file)
-
-    # afficher les points
-    plt.scatter(km_list, price_list, color="blue")
-
-    # on prend les km reel 
-    x_min = min_km
-    x_max = max_km
-
-    #prediction du modele y = theta0 + (theta1 * x_norm)
-    y_min = theta0
-    y_max = theta0 + theta1
-
-    #points de la droite
-    #en matplotlib: X_line(km) = axe horizontal et Y_line(prix) = axe vertical
-    x_line = [x_min, x_max]
-    y_line = [y_min, y_max]
-
-    #tracer la droite
-    plt.plot(x_line, y_line, color="red")
-
-    plt.show()
-
-    OU 
-
-
-    # def plot_model(data_file, theta_file, minmax_file):
-    # km_list, price_list = read_data(data_file)
-    # theta0, theta1 = load_thetas(theta_file)
-    # min_km, max_km = load_minmax(minmax_file)
-
-    # points réels
-    # plt.scatter(km_list, price_list, color="blue")
-
-    # droite prédite
-    # km_line = [min_km, max_km]
-    #     km_line_norm = [(x - min_km) / (max_km - min_km) for x in km_line]
-
-    #     price_line = [
-    #         theta0 + theta1 * km_line_norm[0],
-    #         theta0 + theta1 * km_line_norm[1]
-    #     ]
-
-    #     plt.plot(km_line, price_line, color="red")
-
-    #     plt.xlabel("km")
-    #     plt.ylabel("price")
-    #     plt.title("Linear Regression Model")
-    #     plt.show()
-
-
----------------------------
-
-
 
 
 "1- On normalise min_km et max_km

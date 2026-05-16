@@ -27,7 +27,7 @@ def read_data(csvfile):
                     price = float(split_line[1])
                 except ValueError:
                     continue
-            # ajoute km le kmList et price dans priceList
+            
                 km_list.append(km)
                 price_list.append(price)
             # ou if not km:
@@ -46,10 +46,3 @@ def read_data(csvfile):
         sys.exit(1)
     return km_list, price_list
 
-
-# def test():
-#     tab = read_data("data.csv")
-#     print(tab)
-#     # ([listKm], [listPrice])
-    
-# test()

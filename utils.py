@@ -1,6 +1,5 @@
 import sys
 
-
 def save_thetas(filename, theta0, theta1):
     try:
         with open(filename, "w") as file:
@@ -39,7 +38,6 @@ def load_thetas(filename):
     except (FileNotFoundError, ValueError, PermissionError):
         print("Error loading thetas")
         sys.exit(1)
-
 
 
 def load_minmax(filename):
